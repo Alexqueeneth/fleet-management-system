@@ -5,7 +5,7 @@ import { ConflictError, UnauthenticatedError } from '../common/errors.common.js'
 
 export const register=async(admin )=>{
 
-    const existingAdminwithUsername = await adminService.getadminByUsername(admin.username);
+    const existingAdminwithUsername = await adminService.getadminByUsername(user.username);
     if (existingUserwithUsername) {
         throw new Error('Username already exists');
     }
