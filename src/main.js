@@ -1,7 +1,7 @@
+
 import {server} from './app.server.js';
 import {config} from './common/config.common.js';
 import {connectToDatabase} from './common/db.common.js';
-
 
 (async ()=>
 {
