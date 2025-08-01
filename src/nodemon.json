@@ -1,0 +1,13 @@
+{
+  "watch":[
+    "src/**/*.js", "*.js"
+    
+  ],
+  "ext": "js,json",
+  "ignore": [
+    "node_modules",
+    "dist"
+    
+  ], 
+  "exec": "node src/main.js" 
+}
