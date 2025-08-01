@@ -1,46 +1,55 @@
-import * as adminService from '../admin/admin.service.js';
-import bcrypt from 'bcrypt';
-import { generateAccessToken } from '../common/utils.common.js';
-import { ConflictError, UnauthenticatedError } from '../common/errors.common.js';
+import * as adminService from "../admin/admin.service.js";
+import bcrypt from "bcrypt";
+import { generateAccessToken } from "../common/utils.common.js";
+import {
+  ConflictError,
+  UnauthenticatedError,
+} from "../common/errors.common.js";
 
-export const register=async(admin )=>{
+export const register = async (admin) => {
+  const existingAdminWithUsername = await adminService.getAdminByUsername(
+    admin.username
+  );
+  if (existingAdminWithUsername) {
+    throw new ConflictError("Adminname already exists");
+  }
 
-    const existingAdminwithUsername = await adminService.getadminByUsername(user.username);
-    if (existingUserwithUsername) {
-        throw new Error('Username already exists');
-    }
+  const existingAdminWithEmail = await adminService.getUserByEmail(admin.email);
+  if (existingAdminWithEmail) {
+    throw new ConflictError("this email already exists");
+  }
 
-    const existingUserWithEmail = await userService.getUserByEmail(user.email);
-    if (existingUserWithEmail) {
-        throw new ConflictError ('this email already exists');
-    }
+  const hashedPassword = await bcrypt.hash(admin.password, 10);
+  const newAdmin = await adminService.createAdmin({
+    ...admin,
+    password: hashedPassword,
+  });
+  return {
+    id: newAdmin.id,
+    name: newAdmin.name,
+    email: newAdmin.email,
+    adminname: newAdmin.adminname,
+  };
+};
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    const newUser = await userService.createUser({
-        ...user,
-        password: hashedPassword
-    });
-    return{
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        username: newUser.username
-    }}
-
-     export const login = async (user) => {
-        const existingUser = await userService.getUserByUsername(user.username);
-        if (!existingUser) {
-            throw new UnauthenticatedError ('Invalid credentials, check your inputs and try again');
-         }  
-         if (! await bcrypt.compare(user.password, existingUser.password)) {
-            throw new UnauthenticatedError ('Invalid credentials, check your inputs and try again');
-            }
-         const payload = {
-           sub : existingUser.id,
-            name: existingUser.name,
-            email: existingUser.email,
-            username: existingUser.username
-         }
-         const accessToken = generateAccessToken(payload);
-         return { accessToken }
-        }
+export const login = async (admin) => {
+  const existingAdmin = await adminService.getAdminByAdminname(admin.adminname);
+  if (!existingAdmin) {
+    throw new UnauthenticatedError(
+      "Invalid credentials, check your inputs and try again"
+    );
+  }
+  if (!(await bcrypt.compare(admin.password, existingAdmin.password))) {
+    throw new UnauthenticatedError(
+      "Invalid credentials, check your inputs and try again"
+    );
+  }
+  const payload = {
+    sub: existingAdmin.id,
+    name: existingAdmin.name,
+    email: existingAdmin.email,
+    adminname: existingAdmin.adminname,
+  };
+  const accessToken = generateAccessToken(payload);
+  return { accessToken };
+};

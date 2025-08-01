@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../common/db.common.js';
 
-export const User = sequelize.define('Admin', {
+export const Admin = sequelize.define('Admin', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,

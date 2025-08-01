@@ -27,3 +27,13 @@ export const deleteVehicle = async (id) => {
     await Vehicle.destroy({where:{id}})
     return true
 }
+export const updateVehicleStatus = async (id, status) => {
+    const vehicle = await Vehicle.findByPk(id);
+    if (!vehicle) {
+        throw new Error('Vehicle not found');
+    }
+
+    vehicle.status = status;
+    await vehicle.save();
+    return vehicle;
+}       

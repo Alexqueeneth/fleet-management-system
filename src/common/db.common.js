@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import { config } from './config.common.js';
 
 
-export const sequelize = new Sequelize(config.getOrThrow('PG_URI'))
+export const sequelize = new Sequelize(config.getOrThrow('PG_URL'), { dialect: 'postgres' })
 
  export const connectToDatabase = async () => {
     try {

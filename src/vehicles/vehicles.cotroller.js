@@ -34,3 +34,22 @@ export const deleteVehicle = catchAsync(async (req, res) =>
         
         sendResponse(res, 200, true, "Vehicle deleted successfully", null);
     })
+
+    updateVehicleStatus = catchAsync(async (req, res) => {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        
+        if (!['active', 'inactive', 'assigned', 'maintenance'].includes(status)) {
+            return sendResponse(res, 400, false, "Invalid status", null);
+        }
+
+        const updatedVehicle = await vehicleService.updateVehicle(id, { status });
+        
+        if (!updatedVehicle) {
+            return sendResponse(res, 404, false, "Vehicle not found", null);
+        }
+
+        sendResponse(res, 200, true, "Vehicle status updated successfully", updatedVehicle);
+    }
+    )

@@ -1,8 +1,9 @@
 
 import { Router } from "express";
-import { getServerHealthStatus, sayHello } from "../app.controller.js";
+import { getServerHealthStatus, sayHello } from "../app.controlller.js";
 import {
-  getVehicleById, getVehicles, createVehicle, updateVehicle, deleteVehicle} from "../vehicles/vehicles.service.js";
+  getVehicleById, getVehicles, createVehicle, updateVehicle, deleteVehicle,
+  updateVehicleStatus} from "../vehicles/vehicles.service.js";
 import { getAuthUser, login, register } from "../auth/auth.controller.js";
 import { checkAuthentication } from "../middleware/auth.middleware.js";
 import { getDrivers, getDriverById, createDriver, updateDriver } from "../Drivers/driver.service.js";
@@ -20,6 +21,8 @@ router.get("/vehicles/:id", getVehicleById);
 router.put("/Vehicles", createVehicle);
 router.post("/vehicles/:id", updateVehicle);
 router.delete("/vehicles/:id", deleteVehicle);
+router.put('/vehicles/:id/status', updateVehicleStatus);
+
 
 router.get("/drivers", getDrivers);
 router.get("/drivers/:id", getDriverById);
