@@ -13,7 +13,7 @@ export const register = catchAsync(async (req, res, next) => {
         );
     }
     const user = await authService.register(result.data);
-    sendResponse(res, 201, true, "User registered successfully", user);
+    sendResponse(res, 201, true, "Admin registered successfully", user);
 });
 
 export const login = catchAsync(async (req, res, next) => {
@@ -29,7 +29,7 @@ export const login = catchAsync(async (req, res, next) => {
 
     return res.status(200).json({
         success: true,
-        messsage: "User logged in succcessfully",
+        messsage: "Admin logged in succcessfully",
         authorization: {
             token: accessToken,
             type: "Bearer",
@@ -37,5 +37,5 @@ export const login = catchAsync(async (req, res, next) => {
     });
 });
 export const getAuthUser = catchAsync (async (req, res) => {
-    sendResponse(res, 200, true, "User fetched successfully", req.user);
+    sendResponse(res, 200, true, "Admin fetched successfully", req.user);
 });
