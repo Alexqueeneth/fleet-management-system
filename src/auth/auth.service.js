@@ -3,9 +3,9 @@ import bcrypt from 'bcrypt';
 import { generateAccessToken } from '../common/utils.common.js';
 import { ConflictError, UnauthenticatedError } from '../common/errors.common.js';
 
-export const register=async(user )=>{
+export const register=async(admin )=>{
 
-    const existingUserwithUsername = await userService.getUserByUsername(user.username);
+    const existingAdminwithUsername = await adminService.getadminByUsername(admin.username);
     if (existingUserwithUsername) {
         throw new Error('Username already exists');
     }

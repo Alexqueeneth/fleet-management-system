@@ -1,26 +1,26 @@
-import { User } from './user.model.js';
+import { Admin } from './admin.model.js';
 
-export const createUser = async ( user ) => 
+export const createAdmin = async ( user ) => 
 {
-const newUser = await User.create(user);
-return newUser;
+const newAdmin = await Admin.create(user);
+return newAdmin;
 }
 
-export const getUserById = async (id) =>
+export const getAdminById = async (id) =>
 {
-    const user =await User.findByPk(id);
-    return user;
+    const admin =await Admin.findByPk(id);
+    return admin;
     
 }
 
-export const getUserByEmail = async (email) =>
+export const getAdminByEmail = async (email) =>
 {
-    const user = await User.findOne({ where: { email } });
-    return user;
+    const admin = await Admin.findOne({ where: { email } });
+    return admin;
 }  
 
-export const getUserByUsername = async (username) =>
+export const getAdminByUsername = async (username) =>
 {
-    const user = await User.findOne({ where: { username } });
-    return user;
+    const admin = await Admin.findOne({ where: { username } });
+    return admin;
 }
